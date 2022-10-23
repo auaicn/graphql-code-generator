@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { ListTypeNode, NamedTypeNode, NonNullTypeNode, TypeNode } from 'graphql';
 import { camelCase } from 'change-case-all';
@@ -15,6 +16,55 @@ export const DART_SCALARS: Record<string, string> = {
   Float: 'double',
   DateTime: 'DateTime',
 };
+
+export const DART_KEYWORDS: Set<String> = new Set<String>([
+  'abstract',
+  'else',
+  'import',
+  'show',
+  'as',
+  'enum',
+  'in',
+  'static',
+  'assert',
+  'export',
+  'interface',
+  'super',
+  'async',
+  'extends',
+  'is',
+  'switch',
+  'await',
+  'extension',
+  'late',
+  'sync',
+  'break',
+  'external',
+  'library',
+  'this',
+  'case',
+  'factory',
+  'mixin',
+  'throw',
+  'catch',
+  'false',
+  'new',
+  'true',
+  'class',
+  'final',
+  'null',
+  'try',
+  'const',
+  'finally',
+  'on',
+  'typedef',
+  'continue',
+  'for',
+  'operator',
+  'var',
+]);
+
+console.log(DART_KEYWORDS);
 
 export class FreezedParameterBlock {
   /** document the property */
@@ -116,7 +166,7 @@ export class FreezedParameterBlock {
   }
 
   private setName(): FreezedParameterBlock {
-    this._name = camelCase(this._field.name.value);
+    this._name = this.keywordSafeName(this._field.name.value);
     return this;
   }
 
@@ -192,6 +242,16 @@ export class FreezedParameterBlock {
       return DART_SCALARS[_scalar];
     }
     return _scalar;
+  }
+
+  private keywordSafeName(_name: string): string {
+    if (this._config.avoidDartKeywords && DART_KEYWORDS.has(_name)) {
+      console.log(_name);
+      console.log(this._config.dartKeywordEscapeSuffix ?? '');
+      return _name.concat(this._config.dartKeywordEscapeSuffix ?? '');
+    }
+
+    return _name;
   }
 
   /** returns the block */

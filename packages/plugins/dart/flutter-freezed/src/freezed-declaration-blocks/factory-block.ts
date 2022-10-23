@@ -55,7 +55,12 @@ export class FreezedFactoryBlock {
     return this;
   }
 
-  private setComment(): FreezedFactoryBlock {
+  setAppliesOn(appliesOn: string): FreezedFactoryBlock {
+    // TODO - implement here
+    return this;
+  }
+
+  setComment(): FreezedFactoryBlock {
     const comment = this._node.description?.value;
 
     if (comment && comment !== null && comment !== '') {
@@ -80,7 +85,7 @@ export class FreezedFactoryBlock {
   }
 
   setName(name: string): FreezedFactoryBlock {
-    this._name = pascalCase(name);
+    this._name = name;
     return this;
   }
 
@@ -91,12 +96,13 @@ export class FreezedFactoryBlock {
     return this;
   }
 
-  private setParameters(): FreezedFactoryBlock {
+  setParameters(): FreezedFactoryBlock {
     // TODO: get this from config directly
     const mergeInputs = this._freezedConfigValue.get('mergeInputs');
+
     const appliesOn: ApplyDecoratorOn[] = this._namedConstructor
       ? ['union_factory_parameter']
-      : mergeInputs ?? mergeInputs !== []
+      : mergeInputs
       ? ['merged_input_parameter']
       : ['class_factory_parameter'];
 
@@ -109,12 +115,12 @@ export class FreezedFactoryBlock {
     return this;
   }
 
-  private setShape(): FreezedFactoryBlock {
+  setShape(): FreezedFactoryBlock {
     this._shape = this._parameters.map(p => p.toString()).join('');
     return this;
   }
 
-  private setBlock(): FreezedFactoryBlock {
+  setBlock(): FreezedFactoryBlock {
     let block = '';
 
     //append comment

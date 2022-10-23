@@ -406,6 +406,64 @@ export interface TypeSpecificFreezedConfig {
  */
 export interface FlutterFreezedPluginConfig /* extends TypeScriptPluginConfig */ {
   /**
+   * @name alwaysUseJsonKeyName
+   * @description Use @JsonKey(name: 'name') even if the name is already camelCased
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       alwaysUseJsonKeyName: true
+   *
+   * ```
+   */
+
+  alwaysUseJsonKeyName?: boolean;
+
+  /**
+   * @name avoidDartKeywords
+   * @description avoid converting to dart-language reserved keywords such as `void`, `in`. It appends suffix which can be set by changing `dartKeywordEscapeSuffix` value
+   * @default false
+   * @see_also [dartKeywordEscapeSuffix]
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       avoidDartKeywords: true
+   *
+   * ```
+   */
+
+  avoidDartKeywords?: boolean;
+
+  /**
+   * @name dartKeywordEscapeSuffix
+   * @description
+   * @default "_"
+   * @see_also [avoidDartKeywords]
+   *
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       dartKeywordEscapeSuffix: "_"
+   *
+   * ```
+   */
+
+  dartKeywordEscapeSuffix?: string;
+
+  /**
    * @name camelCasedEnums
    * @description Dart's recommended lint uses camelCase for enum fields. Set this option to `false` to use the same case as used in the GraphQL Schema but note this can cause lint issues.
    * @default true

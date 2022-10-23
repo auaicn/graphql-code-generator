@@ -1,5 +1,5 @@
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { camelCase, pascalCase } from 'change-case-all';
+import { camelCase } from 'change-case-all';
 import { EnumValueDefinitionNode, FieldDefinitionNode, InputValueDefinitionNode, Kind, NamedTypeNode } from 'graphql';
 import { FlutterFreezedPluginConfig } from '../config';
 import {
@@ -161,7 +161,7 @@ export class FreezedDeclarationBlock {
   }
 
   private setName(): FreezedDeclarationBlock {
-    this._name = pascalCase(this._node.name.value);
+    this._name = this._node.name.value;
     return this;
   }
 

@@ -266,6 +266,9 @@ export class FreezedFactoryBlockRepository {
 
 /** initializes a FreezedPluginConfig with the defaults values */
 export class DefaultFreezedPluginConfig implements FlutterFreezedPluginConfig {
+  alwaysUseJsonKeyName?: boolean | undefined;
+  avoidDartKeywords?: boolean;
+  dartKeywordEscapeSuffix?: string;
   camelCasedEnums?: boolean;
   customScalars?: { [name: string]: string };
   fileName?: string;
@@ -275,6 +278,9 @@ export class DefaultFreezedPluginConfig implements FlutterFreezedPluginConfig {
 
   constructor(config: FlutterFreezedPluginConfig = {}) {
     Object.assign(this, {
+      alwaysUseJsonKeyName: config.alwaysUseJsonKeyName ?? false,
+      avoidDartKeywords: config.avoidDartKeywords ?? true,
+      dartKeywordEscapeSuffix: config.dartKeywordEscapeSuffix ?? '',
       camelCasedEnums: config.camelCasedEnums ?? true,
       customScalars: config.customScalars ?? {},
       fileName: config.fileName ?? 'app_models',
@@ -302,6 +308,8 @@ export class DefaultFreezedConfig implements FreezedConfig {
   privateEmptyConstructor?: boolean;
   unionKey?: string;
   unionValueCase?: 'FreezedUnionCase.camel' | 'FreezedUnionCase.pascal';
+  avoidDartKeywords?: boolean;
+  dartKeywordEscapeSuffix?: string;
 
   constructor() {
     Object.assign(this, {
@@ -317,6 +325,8 @@ export class DefaultFreezedConfig implements FreezedConfig {
       privateEmptyConstructor: false,
       unionKey: undefined,
       unionValueCase: undefined,
+      avoidDartKeywords: false,
+      dartKeywordEscapeSuffix: '_',
     });
   }
 }
