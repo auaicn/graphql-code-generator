@@ -64,8 +64,6 @@ export const DART_KEYWORDS: Set<String> = new Set<String>([
   'var',
 ]);
 
-console.log(DART_KEYWORDS);
-
 export class FreezedParameterBlock {
   /** document the property */
   _comment = '';
@@ -245,10 +243,8 @@ export class FreezedParameterBlock {
   }
 
   private keywordSafeName(_name: string): string {
-    if (this._config.avoidDartKeywords && DART_KEYWORDS.has(_name)) {
-      console.log(_name);
-      console.log(this._config.dartKeywordEscapeSuffix ?? '');
-      return _name.concat(this._config.dartKeywordEscapeSuffix ?? '');
+    if (this._config.avoidDartKeywords && this._config.dartKeywordEscapeSuffix && DART_KEYWORDS.has(_name)) {
+      return _name.concat(this._config.dartKeywordEscapeSuffix);
     }
 
     return _name;
