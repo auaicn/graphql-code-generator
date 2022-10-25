@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { ListTypeNode, NamedTypeNode, NonNullTypeNode, TypeNode } from 'graphql';
-import { camelCase } from 'change-case-all';
 import { ApplyDecoratorOn, FlutterFreezedPluginConfig } from '../config';
-import { getCustomDecorators, transformCustomDecorators, FieldType, FreezedConfigValue, NodeType } from '../utils';
+import { FieldType, FreezedConfigValue, getCustomDecorators, NodeType, transformCustomDecorators } from '../utils';
 
 /**
  * maps GraphQL scalar types to Dart's scalar types
@@ -125,7 +124,7 @@ export class FreezedParameterBlock {
     const isDeprecated = this._config.typeSpecificFreezedConfig?.[nodeName]?.fields?.[fieldName]?.deprecated;
     const defaultValue = this._config.typeSpecificFreezedConfig?.[nodeName]?.fields?.[fieldName]?.defaultValue;
 
-    if (this._freezedConfigValue.get('alwaysUseJsonKeyName') || fieldName !== camelCase(fieldName)) {
+    if (this._freezedConfigValue.get('alwaysUseJsonKeyName')) {
       this._decorators = [...this._decorators, `@JsonKey(name: '${fieldName}')\n`];
     }
 
